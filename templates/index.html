@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello</title>
+    <style>
+        html {
+            color-scheme: light dark;
+        }
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            width: 100vw;
+            overflow: hidden;
+        }
+        #title {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        #center-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #long {
+            z-index: 1;
+            position: relative;
+        }
+        #cat {
+            text-align: left;
+        }
+        .nowrap {
+            white-space: nowrap;
+        }
+        #long_end {
+            display: none;
+            position: absolute;
+            margin: 0;
+            top: 0;
+            left: 0;
+            transform-origin: 0 0;
+        }
+        ul {
+            text-align: left;
+        }
+    </style>
+    <script>
+        // Sounds from https://pixabay.com/sound-effects/ <3
+        var cat_sounds = [
+            "/static/cat_sounds/normal/cat1.mp3",
+            "/static/cat_sounds/normal/cat2.mp3",
+            "/static/cat_sounds/normal/cat3.mp3",
+            "/static/cat_sounds/normal/cat4.mp3",
+            "/static/cat_sounds/normal/cat5.mp3",
+            "/static/cat_sounds/normal/cat6.mp3",
+            "/static/cat_sounds/normal/cat7.mp3"
+        ];
+        var cat_count = 0;
+        function cat_clicked() {
+            cat_count++;
+            if (cat_count == 15) {
+                new Audio('/static/cat_sounds/MEOOOOW.mp3').play();
+            } else if (cat_count == 50) {
+                new Audio('/static/cat_sounds/metal.mp3').play();
+            } else {
+                new Audio(cat_sounds[Math.floor(Math.random() * cat_sounds.length)]).play();
+            }
+        }
+
+        var long_text_interval = null;
+        var old_end_text = "";  // Because of the space in the string
+        function a_really_looooooong_time() {
+            long_text_interval = setInterval(function() {
+                var long = document.getElementById("long");
+                long.innerText += "o";
+
+                var long_end = document.getElementById("long_end");
+                if (long.getBoundingClientRect().right > document.body.clientWidth + 300) {
+                    // Dont really work in CSS
+                    long_end.style.top = `${0 - long_end.offsetHeight / 2}px`;
+                    long_end.style.transform = `rotate(${Math.atan2(document.body.clientHeight, document.body.clientWidth) * 180 / Math.PI}deg)`;  // From the upper left corner to the lower right corner
+
+                    long_end.style.display = "inline-block";
+                    var new_text = "o" + old_end_text;
+                    old_end_text = new_text.slice(0, -8) + "ng time)".substring(8 - new_text.length);
+                    long_end.innerText = old_end_text;
+                }
+            }, 100);
+        }
+        function reset_long_text() {
+            if (long_text_interval != null) {
+                clearInterval(long_text_interval);
+                document.getElementById("long").innerHTML = "oooo";
+                document.getElementById("long_end").style.display = "none";
+                old_end_text = "";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div id="center-container">
+        <div id="title">&#x1F44B; Hello</div>
+        <h3>
+            This site is currently under construction for an unknown amount of time.
+        </h3>
+        <h3>
+            <div class="nowrap">(For a l<span id="long" onmouseover="a_really_looooooong_time()" onmouseout="reset_long_text()">oooo</span>ng time)</div>
+        </h3>
+        <p>
+            You can visit the following sites:
+            <ul>
+                <li>
+                    <a href="https://github.com/dodaucy" target="_blank">github.com/dodaucy - GitHub [en]</a>
+                </li>
+                <li>
+                    <a href="https://time.dodaucy.com" target="_blank">time.dodaucy.com - Time API [en]</a>
+                </li>
+                <li>
+                    <a href="https://wop.dodaucy.com/ " target="_blank">wop.dodaucy.com - Wahrheit oder Pflicht [de]</a>
+                </li>
+                <!--
+                    <li>
+                        <a href="https://admin.dodaucy.com" target="_blank">admin.dodaucy.com - Admin Shell Command Executor
+                    </li>
+                -->
+            </ul>
+        </p>
+        <p>
+            As long as you wait, this cat will be here to keep you company.
+        </p>
+        <pre id="cat" onclick="cat_clicked()">
+   |\---/|   <!-- meow :3 -->
+   | ,_, |
+    \_`_/-..----.
+ ___/ `   ' ,""+ \
+(__...'   __\    |`.___.';
+  (_,...'(_,.`__)/'.....+</pre>
+    </div>
+    <h3 id="long_end" class="nowrap"></h3>
+</body>
+</html>

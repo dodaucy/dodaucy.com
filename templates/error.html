@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ status_code }} - {{ detail }}</title>
+    <style>
+        html {
+            color-scheme: light dark;
+        }
+        body {
+            font-family: sans-serif;
+            text-align: center;
+        }
+        #center-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #fox {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div id="center-container">
+        <h1>
+            {{ status_code }} - {{ detail }}
+        </h1>
+        <pre id="fox">  <!-- foxes are cute -->
+ /\   /\
+//\\_//\\     ____
+\_     _/    /   /  <!-- you are cute too :3 -->
+ / * * \    /^^^]
+ \_\O/_/    [   ]
+  /   \_    [   /
+  \     \_  /  /
+   [ [ /  \/ _/
+  _[ [ \  /_/</pre>
+    </div>
+</body>
+</html>
